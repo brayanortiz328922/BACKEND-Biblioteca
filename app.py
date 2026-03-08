@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from src.endpoints.libros import router as libros_router
-
+from src.endpoints.autores import router as autores_router
 # para importar la conexion
 from src.database.connection import Base, engine
 
@@ -18,6 +18,7 @@ app = FastAPI()
 Base.metadata.create_all(bind=engine)
 
 app.include_router(libros_router)
+app.include_router(autores_router)
 
 @app.get("/")
 def read_root():
