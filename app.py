@@ -6,7 +6,9 @@ from src.database.connection import Base, engine
 
 # para importar las entidades
 from src.entities import autor
-from src.entities import material
+from src.entities import libro
+from src.entities import revista
+from src.entities import periodico
 from src.entities import usuario
 from src.entities import prestamo
 

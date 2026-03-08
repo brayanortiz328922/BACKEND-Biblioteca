@@ -1,9 +1,9 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Date
 from src.database.connection import Base
 
-class Usuario(Base):
-    __tablename__ = "usuario"
+class Periodico(Base):
+    __tablename__ = "periodico"
 
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String(100), nullable=False)
-    email = Column(String(100), unique=True)
+    fecha_publicacion = Column(Date)

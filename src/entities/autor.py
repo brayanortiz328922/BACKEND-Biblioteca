@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String
 from src.database.connection import Base
 
 class Autor(Base):
+    __tablename__ = "autor"
 
-    __tablename__ = "autores"
     id = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String, nullable=False)
-    nacionalidad = Column(String)
+    nombre = Column(String(100), nullable=False)
+    nacionalidad = Column(String(100))
