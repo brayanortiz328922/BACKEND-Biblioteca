@@ -1,7 +1,19 @@
 from fastapi import FastAPI
 from src.endpoints.libros import router as libros_router
 
+# para importar la conexion
+from src.database.connection import Base, engine
+
+# para importar las entidades
+from src.entities import autor
+from src.entities import material
+from src.entities import usuario
+from src.entities import prestamo
+
 app = FastAPI()
+
+# para que las tablas se creen en la base de datos
+Base.metadata.create_all(bind=engine)
 
 app.include_router(libros_router)
 

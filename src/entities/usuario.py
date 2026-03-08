@@ -1,9 +1,11 @@
 from sqlalchemy import Column, Integer, String
 from src.database.connection import Base
 
-class Autor(Base):
+class Usuario(Base):
 
-    __tablename__ = "autores"
+    __tablename__ = "usuarios"
+
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
-    nacionalidad = Column(String)
+    email = Column(String, unique=True)
+    telefono = Column(String)
