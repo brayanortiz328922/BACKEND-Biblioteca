@@ -5,7 +5,9 @@ BASE_URL = "http://127.0.0.1:8000"
 
 def menu_principal():
     while True:
-        print("\n===== MENU PRINCIPAL =====")
+        print("\n==============================")
+        print("   SISTEMA DE BIBLIOTECA")
+        print("==============================")
         print("1. Libros")
         print("2. Autores")
         print("3. Usuarios")
@@ -29,12 +31,15 @@ def menu_principal():
         elif opcion == "6":
             menu_entidad("prestamos")
         elif opcion == "0":
+            print("Saliendo del sistema...")
             break
+        else:
+            print("Opcion invalida")
 
 
 def menu_entidad(entidad):
     while True:
-        print(f"\n--- {entidad.upper()} ---")
+        print(f"\n------ {entidad.upper()} ------")
         print("1. Listar")
         print("2. Ver uno")
         print("3. Crear")
@@ -48,32 +53,71 @@ def menu_entidad(entidad):
             listar(entidad)
 
         elif opcion == "2":
-            id = input("ID: ")
-            ver_uno(entidad, id)
+            try:
+                id = int(input("ID: "))
+                ver_uno(entidad, id)
+            except:
+                print("ID invalido")
 
         elif opcion == "3":
             crear(entidad)
 
         elif opcion == "4":
-            id = input("ID: ")
-            actualizar(entidad, id)
+            try:
+                id = int(input("ID: "))
+                actualizar(entidad, id)
+            except:
+                print("ID invalido")
 
         elif opcion == "5":
-            id = input("ID: ")
-            eliminar(entidad, id)
+            try:
+                id = int(input("ID: "))
+                eliminar(entidad, id)
+            except:
+                print("ID invalido")
 
         elif opcion == "0":
             break
 
+        else:
+            print("Opcion invalida")
+
 
 def listar(entidad):
-    r = requests.get(f"{BASE_URL}/{entidad}/")
-    print(r.json())
+    try:
+        r = requests.get(f"{BASE_URL}/{entidad}/")
+
+        if r.status_code == 200:
+            datos = r.json()
+
+            if not datos:
+                print("No hay registros")
+
+            else:
+                print("\nRegistros encontrados:\n")
+                for item in datos:
+                    print(item)
+
+        else:
+            print("Error:", r.status_code, r.text)
+
+    except:
+        print("No se pudo conectar con la API")
 
 
 def ver_uno(entidad, id):
-    r = requests.get(f"{BASE_URL}/{entidad}/{id}")
-    print(r.json())
+    try:
+        r = requests.get(f"{BASE_URL}/{entidad}/{id}")
+
+        if r.status_code == 200:
+            print("\nRegistro encontrado:\n")
+            print(r.json())
+
+        else:
+            print("Registro no encontrado")
+
+    except:
+        print("Error al conectar con la API")
 
 
 def crear(entidad):
@@ -108,8 +152,18 @@ def crear(entidad):
         datos["fecha_prestamo"] = input("Fecha prestamo (YYYY-MM-DD): ")
         datos["fecha_devolucion"] = input("Fecha devolucion (YYYY-MM-DD): ")
 
-    r = requests.post(f"{BASE_URL}/{entidad}/", json=datos)
-    print(r.json())
+    try:
+        r = requests.post(f"{BASE_URL}/{entidad}/", json=datos)
+
+        if r.status_code in [200, 201]:
+            print("\nRegistro creado correctamente")
+            print(r.json())
+
+        else:
+            print("Error:", r.status_code, r.text)
+
+    except:
+        print("Error al conectar con la API")
 
 
 def actualizar(entidad, id):
@@ -146,13 +200,33 @@ def actualizar(entidad, id):
         datos["fecha_prestamo"] = input("Fecha prestamo (YYYY-MM-DD): ")
         datos["fecha_devolucion"] = input("Fecha devolucion (YYYY-MM-DD): ")
 
-    r = requests.put(f"{BASE_URL}/{entidad}/{id}", json=datos)
-    print(r.json())
+    try:
+        r = requests.put(f"{BASE_URL}/{entidad}/{id}", json=datos)
+
+        if r.status_code == 200:
+            print("\nRegistro actualizado")
+            print(r.json())
+
+        else:
+            print("Error:", r.status_code, r.text)
+
+    except:
+        print("Error al conectar con la API")
 
 
 def eliminar(entidad, id):
-    r = requests.delete(f"{BASE_URL}/{entidad}/{id}")
-    print(r.json())
+    try:
+        r = requests.delete(f"{BASE_URL}/{entidad}/{id}")
+
+        if r.status_code == 200:
+            print("\nRegistro eliminado")
+            print(r.json())
+
+        else:
+            print("Error:", r.status_code, r.text)
+
+    except:
+        print("Error al conectar con la API")
 
 
 menu_principal()

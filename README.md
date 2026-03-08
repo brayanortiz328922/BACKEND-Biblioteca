@@ -33,15 +33,25 @@ Además incluye un **menú por consola** que consume la API mediante HTTP.
 
 
 BACKEND-Biblioteca
+
 │
+
 ├── app.py
+
 ├── menu.py
+
 ├── requirements.txt
+
 │
+
 └── src
+
 ├── database
+
 ├── endpoints
+
 ├── entities
+
 └── schemas
 
 
@@ -65,6 +75,19 @@ Instalar dependencias:
 
 
 pip install -r requirements.txt
+
+
+---
+
+## Inicializar la base de datos
+
+Si necesitas crear las tablas manualmente en la base de datos:
+
+
+python init_db.py
+
+
+Este script crea las tablas definidas en las entidades usando SQLAlchemy.
 
 
 ---
